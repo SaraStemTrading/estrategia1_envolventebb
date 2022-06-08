@@ -11,19 +11,24 @@ import matplotlib.dates as md
 from backtesting import Backtest, Strategy
 from backtesting.lib import crossover
 from backtesting.lib import SignalStrategy
+import os
+from dotenv import load_dotenv
 
-#DATOS
-activo='^GDAXI'#poner el activo de la página Yahoo Finance
-period='1wk' #periodo solo para timeframe intradía
-interval='15m' #timeframe 
-hoy = date.today() #para datos diarios o más
-years=3 #años a analizar en timeframe diario o más
-comienzo = (hoy - relativedelta(years=years)) #start en timeframe diario o más
-periodo_bb=20
-riesgo_op=0.02
-capital=10000
-comision=0.002
-margen=0.05
+load_dotenv()
+years = int(os.environ['years'])
+hoy = date.today()  # fecha de hoy
+# fecha de comienzo en timeframe diario
+comienzo = (hoy - relativedelta(years=years))
+
+# DATOS DE .ENV
+activo = os.environ['activo']
+period = os.environ['period']
+interval = os.environ['interval']
+periodo_bb = int(os.environ['periodo_bb'])
+riesgo_op = float(os.environ['riesgo_op'])
+capital = int(os.environ['capital'])
+comision = float(os.environ['comision'])
+margen = float(os.environ['margen'])
 
 #DATOS INTRADÍA YAHOO FINANCE
 if interval=='1d' or interval=='1wk' or interval=='1mo':
