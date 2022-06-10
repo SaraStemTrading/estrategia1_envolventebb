@@ -1,6 +1,6 @@
 # ESTRATEGIA Nº1: Envolvente en Bollinger
 #### Por Sara STEM
->_En mi vida he sufrido cosas terribles, aunque la mayoría de ellas nunca ocurrieron_ - Mark Twain.
+>_En mi vida he sufrido cosas terribles, aunque la mayoría de ellas nunca ocurrieron._ - Mark Twain.
 
 ## Descripción de la estrategia
 
