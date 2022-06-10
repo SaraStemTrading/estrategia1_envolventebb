@@ -97,4 +97,6 @@ Con toda esta información, puedes hacer pruebas y valorar los resultados para c
 
 **¡Espero que te resulte de utilidad!**
 
+PD: Toda ayuda o sugerencia en el código es bienvenida 😉
+
 **_Sara STEM | Trading Algorítmico_** 👩🏻‍💻
