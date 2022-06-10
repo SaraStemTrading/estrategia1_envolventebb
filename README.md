@@ -6,6 +6,8 @@
 
 He programado en Python una estrategia con la que llevo trabajando mucho años y que avisa del impulso con mucha antelación. Consiste en comprar tras encontrar una envolvente que toque en alguna parte de su cuerpo o mecha la banda inferior de Bollinger. El stop se mueve a la altura de la banda media de Bollinger de 20 sesiones siempre que el precio haya cerrado por encima de la banda superior. Para el caso bajista es justo al revés. 
 
+Yo hago mi operativa de Trading cada día con el broker XTB, con el que puedes abrir una cuenta real [aquí](https://www.xtb.com/es/abrir-cuenta-real?cxd=35312_576021&affid=35312&utm_source=affiliate&utm_medium=TextLink&utm_campaign=35312&utm_content=REAL%20GEO&utm_term=Spanish).
+
 ### Ejemplo de una entrada
 ![entrada](https://www.sarastem.com/wp-content/uploads/2022/06/estrategia1_envolventebb.png)
 ## Instalación previa
