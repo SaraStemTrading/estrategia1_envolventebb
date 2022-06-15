@@ -104,7 +104,7 @@ for x in range(len(df)):
             df['contratos'][x]=math.ceil(abs((riesgo_op*capital)/(df['pr_entrada'][x]-df['stop'][x])))
             
 #DEFINIMOS EL BACKTEST
-class estrategia2(SignalStrategy):
+class estrategia1(SignalStrategy):
 
     def init(self):
         super().init()
@@ -132,7 +132,7 @@ class estrategia2(SignalStrategy):
                 if self.data.posicion_v==2:
                     trade.sl = media
 
-btest = Backtest(df, estrategia2, cash=capital, commission=comision, exclusive_orders=False, hedging=True, trade_on_close=False, margin=margen)
+btest = Backtest(df, estrategia1, cash=capital, commission=comision, exclusive_orders=False, hedging=True, trade_on_close=False, margin=margen)
 stats=btest.run()
 btest.plot(open_browser=False)
 
