@@ -9,7 +9,7 @@ He programado en Python una estrategia con la que llevo trabajando mucho años y
 Yo hago mi operativa de Trading cada día con el broker XTB, con el que puedes abrir una cuenta real [aquí](https://www.xtb.com/es/abrir-cuenta-real?cxd=35312_576021&affid=35312&utm_source=affiliate&utm_medium=TextLink&utm_campaign=35312&utm_content=REAL%20GEO&utm_term=Spanish).
 
 ### Ejemplo de una entrada
-![entrada](https://www.sarastem.com/wp-content/uploads/2022/06/estrategia1_envolventebb.png)
+![entrada](https://www.sarastem.com/wp-content/uploads/2022/06/entrada_estrategian1.png)
 ## Instalación previa
 
 Para iniciar este proyecto, debemos tener descargado "Git" y "Python3" en nuestro ordenador. Los podemos encontrar en:
