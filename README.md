@@ -6,7 +6,7 @@
 
 En la semana STEM dedicada a hablar sobre Bollinger, he programado en Python una estrategia con la que llevo trabajando mucho años y que avisa del impulso con mucha antelación. Consiste en comprar tras encontrar una envolvente que toque en alguna parte de su cuerpo o mecha la banda inferior de Bollinger. El stop se mueve a la altura de la banda media de Bollinger de 20 sesiones siempre que el precio haya cerrado por encima de la banda superior. Para el caso bajista es justo al revés. 
 
-En este artículo, he hecho la muestra con el DAX en 15min, pero al descargar la estrategia en tu ordenador, puedes probar con cualquier otro producto y cualquier otro timeframe, además de poder cambiar los parámetros de capital y gestión de riesgo como quieras para valorar los resultados.
+En este artículo, he hecho el testeo con el DAX en 15min, pero al descargar la estrategia en tu ordenador, puedes probar con cualquier otro producto y cualquier otro timeframe, además de poder cambiar los parámetros de capital y gestión de riesgo como quieras para valorar los resultados.
 
 Yo hago mi operativa de Trading cada día con el broker XTB, con el que puedes abrir una cuenta real [aquí](https://www.xtb.com/es/abrir-cuenta-real?cxd=35312_576021&affid=35312&utm_source=affiliate&utm_medium=TextLink&utm_campaign=35312&utm_content=REAL%20GEO&utm_term=Spanish).
 
