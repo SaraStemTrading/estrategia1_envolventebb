@@ -56,9 +56,8 @@ for i in range(len(df)):
 
 #GESTIÓN DE STOPS           
 df['pr_entrada']=0.0
-df['stop']=0.0
-df['posicion_c']=0
-df['posicion_v']=0
+df['stop_compra']=0.0
+df['stop_venta']=0.0
 df_=df
 df_=df_.reset_index()
 
@@ -67,42 +66,48 @@ for t in range(len(df)):
     if df['entrada'][t]==100:
         df['pr_entrada'][t]=df['Close'][t]
         stop_a = df_.loc[t-4:t, 'Low'].min()
-        df['stop'][t]=stop_a
+        df['stop_compra'][t]=stop_a
     elif df['entrada'][t]==-100:
         df['pr_entrada'][t]=df['Close'][t]
         stop_b = df_.loc[t-4:t, 'High'].max()
-        df['stop'][t]=stop_b
-
-df['stop'].replace(0, np.nan, inplace=True)
-df['stop'].fillna(method='ffill', inplace=True)
-df['stop'] = df['stop'].fillna(0)
+        df['stop_venta'][t]=stop_b
 
 #final
 for x in range(len(df)):
     if df['Close'][x]>df['UBB'][x]:
-        df['posicion_c'][x]=1
-    if df['Low'][x]<df['MBB'][x]:
-        df['posicion_c'][x]=-1
+        df['stop_compra'][x]=df['MBB'][x]
     if df['Close'][x]<df['LBB'][x]:
-        df['posicion_v'][x]=2
-    if df['High'][x]>df['MBB'][x]:
-        df['posicion_v'][x]=-2
-        
-cols=['posicion_c','posicion_v']
-df[cols].replace(0, np.nan, inplace=True)
-df[cols].fillna(method='ffill', inplace=True)
+        df['stop_venta'][x]=df['MBB'][x]
+
+df['stop_compra'].replace(0, np.nan, inplace=True)
+df['stop_compra'].fillna(method='ffill', inplace=True)
+df['stop_compra'] = df['stop_compra'].fillna(0)
+df['stop_venta'].replace(0, np.nan, inplace=True)
+df['stop_venta'].fillna(method='ffill', inplace=True)
+df['stop_venta'] = df['stop_venta'].fillna(0)
 
 #VOLUMEN A INVERTIR
-df['contratos']=0
+df['contratos_compra']=0
 df=df.dropna()
 for x in range(len(df)):
     if activo[-1]=='X': #en divisas
-        if df['pr_entrada'][x]>0 :
-            df['contratos'][x]=math.ceil(abs((riesgo_op*capital)/(df['pr_entrada'][x]-df['stop'][x])*0.00001)) 
+        if df['pr_entrada'][x]>0 and df['entrada'][x]==100:
+            df['contratos_compra'][x]=math.ceil((riesgo_op*capital)/(df['pr_entrada'][x]-df['stop_compra'][x])*0.0001)
     else:
-        if df['pr_entrada'][x]>0 :
-            df['contratos'][x]=math.ceil(abs((riesgo_op*capital)/(df['pr_entrada'][x]-df['stop'][x])))
+        if df['pr_entrada'][x]>0 and df['entrada'][x]==100:
+            df['contratos_compra'][x]=math.ceil((riesgo_op*capital)/(df['pr_entrada'][x]-df['stop_compra'][x]))
             
+df['contratos_venta']=0
+df=df.dropna()
+for x in range(len(df)):
+    if activo[-1]=='X': #en divisas
+        if df['pr_entrada'][x]>0 and df['entrada'][x]==-100:
+            df['contratos_venta'][x]=math.ceil(abs((riesgo_op*capital)/(df['pr_entrada'][x]-df['stop_venta'][x])*0.0001)) 
+    else:
+        if df['pr_entrada'][x]>0 and df['entrada'][x]==-100:
+            df['contratos_venta'][x]=math.ceil(abs((riesgo_op*capital)/(df['pr_entrada'][x]-df['stop_venta'][x])))
+
+
 #DEFINIMOS EL BACKTEST
 class estrategia1(SignalStrategy):
 
@@ -113,26 +118,23 @@ class estrategia1(SignalStrategy):
         super().next()
         pr_entrada = self.data.pr_entrada
         entrada=self.data.entrada
-        contratos=self.data.contratos
-        media=self.data.MBB
-        stop=self.data.stop
+        contratos_compra=self.data.contratos_compra
+        contratos_venta=self.data.contratos_venta
+        stop_compra=self.data.stop_compra
+        stop_venta=self.data.stop_venta
         if entrada==100 and pr_entrada>0:
-            alcista=contratos[np.argwhere((entrada==100) & (pr_entrada>0))[-1]]
+            alcista=contratos_compra[np.argwhere((entrada==100) & (pr_entrada>0))[-1]]
             self.buy(size=alcista[0])
         if entrada==-100 and pr_entrada>0:
-            bajista=contratos[np.argwhere((entrada==-100) & (pr_entrada>0))[-1]]
+            bajista=contratos_venta[np.argwhere((entrada==-100) & (pr_entrada>0))[-1]]
             self.sell(size=bajista[0])            
         for trade in self.trades:
             if trade.is_long:
-                trade.sl=stop
-                if self.data.posicion_c==1:
-                    trade.sl = media
+                trade.sl=stop_compra
             if trade.is_short:
-                trade.sl=stop
-                if self.data.posicion_v==2:
-                    trade.sl = media
+                trade.sl=stop_venta
 
-btest = Backtest(df, estrategia1, cash=capital, commission=comision, exclusive_orders=False, hedging=True, trade_on_close=False, margin=margen)
+btest = Backtest(df, estrategia1, cash=capital, commission=comision, exclusive_orders=False, hedging=True, trade_on_close=True, margin=margen)
 stats=btest.run()
 btest.plot(open_browser=False)
 
