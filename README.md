@@ -33,7 +33,7 @@ Se abrirá un terminal en la parte baja donde escribiremos los siguientes pasos:
 
 2. Una vez dentro, clonamos el proyecto escribiendo lo siguiente:
 
-`git clone https://github.com/SaraStemTrading/estrategia2_patron3velas.git`
+`git clone https://github.com/SaraStemTrading/estrategia1_envolventebb.git`
 
 3. Entramos en la carpeta especificada:
 
